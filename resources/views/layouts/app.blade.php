@@ -4,7 +4,7 @@
   <title>Elevator - @yield('title')</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" type="text/css" href="{!! asset('css/app.css') !!}">
+  <link rel="stylesheet" type="text/css" href="{!! secure_asset('css/app.css') !!}">
   <style>
     /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
     .row.content {height: 1500px}
@@ -90,7 +90,7 @@
   <p>Elevators</p>
 </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script type="text/javascript" src="{!! asset('js/app.js') !!}"></script>
+<script type="text/javascript" src="{!! secure_asset('js/app.js') !!}"></script>
 @yield('scripts')
 </body>
 </html>
