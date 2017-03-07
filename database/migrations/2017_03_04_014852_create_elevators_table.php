@@ -19,7 +19,8 @@ class CreateElevatorsTable extends Migration
             $table->string('name');
             $table->string('direction');
             $table->integer('current_floor');
-            $table->string('queue');
+            $table->string('queue_up');
+            $table->string('queue_down');
         });
     }
 

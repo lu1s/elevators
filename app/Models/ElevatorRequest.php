@@ -14,9 +14,9 @@ class ElevatorRequest extends Model
 		$req = new \App\ElevatorRequest;
 		$req->direction = $direction;
 		$req->current_floor = $floor;
-    	$stand = \App\Elevator::where('direction','stand')->get()->first();
+    	$stand = \App\Elevator::where('direction','stand')->inRandomOrder()->get()->first();
     	if($stand != null){
-    		$stand->add_to_queue($floor);
+    		$stand->add_to_queue($floor, $direction);
     		$req->queued_to_elevator = $stand->id;
     		$req->save();
     		return $req;
@@ -25,16 +25,16 @@ class ElevatorRequest extends Model
     		$ltgt = $direction == "down" ? ">=" : "<=";
     		$elevator_dir = \App\Elevator::where('direction', $direction)->where('current_floor', $ltgt, $floor)->orderBy("current_floor")->get()->first();
     		if($elevator_dir != null){
-    			$elevator_dir->add_to_queue($floor);
+    			$elevator_dir->add_to_queue($floor, $direction);
     			$req->queued_to_elevator = $elevator_dir->id;
     			$req->save();
     			return $req;
     		}
     		else{
-    			$els = DB::select('select * from elevators order by length(queue)');
+    			$els = DB::select('select * from elevators order by length(queue_'.$direction.')');
     			if(!empty($els)){
     				$el = \App\Elevator::find($els[0]->id);
-    				$el->add_to_queue($floor);
+    				$el->add_to_queue($floor, $direction);
     				$req->queued_to_elevator = $el->id;
     				$req->save();
     				return $req;

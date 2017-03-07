@@ -29,9 +29,14 @@ Route::get('/elevators/get/{id}', function($id) {
 	$b = $el->beautify_queue();
 	return Array('elevator' => $el, 'beautified_queue' => $b);
 });
-Route::get('/elevators/add_to_queue/{id}/{floor}', function($id, $floor) {
+Route::get('/elevators/add_to_queue/{id}/{floor}/{direction}', function($id, $floor, $direction) {
 	$ele = \App\Elevator::find($id);
-	$ele->add_to_queue($floor);
+	if($direction == "down"){
+		$ele->add_to_queue_down($floor);
+	}
+	else{
+		$ele->add_to_queue_up($floor);
+	}
 	return $ele;
 });
 Route::get('/elevators/go_to_next_floor/{id}', function($id) {
@@ -44,4 +49,12 @@ Route::get('/elevators/add_new_floor_request/{floor}/{direction}', function($flo
 });
 Route::get('/elevators/get_queued_floors', function(){
 	return \App\ElevatorRequest::all();
+});
+Route::get('/elevators/delete_request/{floor}/{direction}', function($floor, $direction){
+	$req = \App\ElevatorRequest::where('current_floor', $floor)->where('direction', $direction)->get()->first();
+	if($req != null){
+		$req->delete();
+		return "yes";
+	}
+	return "nop";
 });

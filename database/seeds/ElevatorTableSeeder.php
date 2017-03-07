@@ -15,19 +15,22 @@ class ElevatorTableSeeder extends Seeder
         	'name' => 'Elevator 1',
         	'direction' => 'stand',
         	'current_floor' => 0,
-        	'queue' => ''
+        	'queue_down' => '',
+        	'queue_up' => ''
         ]);
         DB::table('elevators')->insert([
         	'name' => 'Elevator 2',
         	'direction' => 'stand',
         	'current_floor' => 0,
-        	'queue' => ''
+        	'queue_down' => '',
+        	'queue_up' => ''
         ]);
         DB::table('elevators')->insert([
         	'name' => 'Elevator 3',
         	'direction' => 'stand',
         	'current_floor' => 0,
-        	'queue' => ''
+        	'queue_down' => '',
+        	'queue_up' => ''
         ]);
     }
 }
