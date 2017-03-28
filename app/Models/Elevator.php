@@ -46,6 +46,7 @@ class Elevator extends Model
     	return array_unique(array_merge($up,$down));
     }
     public function add_to_queue($floor, $direction){
+		Log::info("added floor ".$floor." (".$direction.") to elevator ".$this->id);
     	if($direction == "up"){
     		return $this->add_to_queue_up($floor);
     	}
@@ -115,6 +116,7 @@ class Elevator extends Model
 	    			unset($queue[array_search($floor, $queue)]);
 	    			$this->queue_down = implode(",",$queue);
 	    			$this->save();
+	    			Log::info("removed floor ".$floor." (".$direction.") from elevator ".$this->id);
 	    		}
 	    	}
 	    	return $this;
@@ -126,6 +128,7 @@ class Elevator extends Model
 	    			unset($queue[array_search($floor, $queue)]);
 	    			$this->queue_up = implode(",",$queue);
 	    			$this->save();
+	    			Log::info("removed floor ".$floor." (".$direction.") from elevator ".$this->id);
 	    		}
 	    	}
 	    	return $this;
@@ -184,6 +187,7 @@ class Elevator extends Model
     	$queue = explode(",",$this->queue_up);
     	$this->current_floor = $this->current_floor+1;
     	$this->save();
+    	Log::info("moved elevator ".$this->id." from floor ".($this->current_floor-1)." to ".$this->current_floor);
     	if($this->floor_is_in_queue($this->current_floor, "up")){
     		$nu = $this->remove_from_queue($this->current_floor, $this->direction);
     		$er = \App\ElevatorRequest::where('current_floor', $this->current_floor)->where('direction', $this->direction)->get()->first();
@@ -192,6 +196,7 @@ class Elevator extends Model
     		}
     		$this->queue_up = $nu->queue_up;
     	}
+    	Log::info("elevator ".$this->id." got to floor ".$this->current_floor." that was queued... removed now from queue");
     	return $this;
     }
     public function go_to_next_floor_down(){
@@ -203,6 +208,7 @@ class Elevator extends Model
     	$queue = explode(",",$this->queue_up);
     	$this->current_floor = $this->current_floor-1;
     	$this->save();
+    	Log::info("moved elevator ".$this->id." from floor ".($this->current_floor-1)." to ".$this->current_floor);
     	if($this->floor_is_in_queue($this->current_floor, "down")){
     		$nu = $this->remove_from_queue($this->current_floor, $this->direction);
     		$er = \App\ElevatorRequest::where('current_floor', $this->current_floor)->where('direction', $this->direction)->get()->first();
@@ -210,6 +216,7 @@ class Elevator extends Model
     			$er->delete();
     		}
     		$this->queue_up = $nu->queue_down;
+    		Log::info("elevator ".$this->id." got to floor ".$this->current_floor." that was queued... removed now from queue");
     	}
     	return $this;
     }

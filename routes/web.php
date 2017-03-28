@@ -13,3 +13,4 @@
 
 Route::get('/', 'ElevatorQueueController@index');
 Route::get('/elevators', 'ElevatorQueueController@index');
+Route::get('/simplyrets', 'SimplyRetsController@index');
