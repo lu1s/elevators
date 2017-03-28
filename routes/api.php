@@ -60,12 +60,12 @@ Route::get('/elevators/delete_request/{floor}/{direction}', function($floor, $di
 });
 
 Route::get('/simplyrets/load_data/{id}', function($id){
-    $url = 'https://api.simplyrets.com'.$url.'/'.$id;
+    $url = 'https://api.simplyrets.com/properties/'.urlencode($id);
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($ch, CURLOPT_USERPWD, "simplyrets:simplyrets");
     $out = curl_exec($ch);
     curl_close($ch);
-    return json_decode($out);
+    return array('success'=>true, 'data'=>json_decode($out));
 });

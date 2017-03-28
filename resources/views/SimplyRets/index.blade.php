@@ -5,11 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="author" content="">
 		<title>SimplyRets Demo</title>
-		<link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+		<link href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed" rel="stylesheet"> 
 		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<style type="text/css">
 			body{
-				font-family:'Raleway', sans-serif;
+				font-family: 'Fira Sans Condensed', sans-serif;
+				color:black !important;
 			}
 			.loading, .alert{
 				position:fixed;
@@ -62,7 +63,7 @@
           <ul class="nav nav-pills pull-right">
           </ul>
         </nav>
-        <h3 class="text-muted">LHP SimplyRets</h3>
+        <h3>Search for a property by MLS-ID</h3>
       </div>
 
       <div class="jumbotron">
@@ -164,9 +165,9 @@
 		function populateData(d){
 			$(".private_remarks").text(d.privateRemarks);
 			$(".property").html(getObjectList(d.property));
-			$(".address").text(getAddress(d.address));
+			$(".address").html(getAddress(d.address));
 			$(".agent").text(getAgent(d.agent));
-			$(".school").text(getSchool(d.school));
+			$(".school").html(getSchool(d.school));
 			$(".photos").html(getPhotos(d.photos));
 			$("#details").fadeIn();
 		}
@@ -216,7 +217,7 @@
 			$("#go").click(function(){
 				searchMlsid();
 			});
-			$("#clear").flick(function(){
+			$("#clear").click(function(){
 				if(!loading){
 					loading = true;
 					clearData();
